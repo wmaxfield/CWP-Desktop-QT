@@ -6,7 +6,9 @@ Build using QtCreator</br>
 General Notes: (see CWP.pro for more details) </br>
 <b>Windows Build:</b> </br>
 Requires:</br>
-1. QT development environment for MinGW 5.5.1 (or possibly later) with QWebKit or QT development environment for MSVC 5.5.1 (or possily later) either QWebKit or QWebEngine</br>
+1. QT development environment for MinGW 5.5.1 (or possibly later) with QWebKit </br>
+or </br>
+QT development environment for MSVC 5.5.1 (or possily later) either QWebKit or QWebEngine</br>
 2. QTCreator (usually included with Qt development environment.  see download.qt.io)</br>
 3. One of the sdk's for MT.exe (Manifest Tool)</br>
 4. InnoSetup is a good tool for creating an Install package. Example scripts are included</br>
