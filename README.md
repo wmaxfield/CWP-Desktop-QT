@@ -19,5 +19,6 @@ Requires:</br>
 3. CLANG will not compile over a VMWare shared drive, must be local files.</br>
 </br>
 <b>Linux Build:</b></br>
-1. Install qtcreator (sudo apt-get install qtcreator)
-2. Project will use linuxdeployqt if installed.
+1. Install qtcreator (sudo apt-get install qtcreator)</br>
+2. Project will use linuxdeployqt if installed.</br>
+</br>
