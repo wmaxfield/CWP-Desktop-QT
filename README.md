@@ -10,10 +10,9 @@ Requires:</br>
 or </br>
 QT development environment for MSVC 5.5.1 (or possily later) either QWebKit or QWebEngine</br>
 2. QTCreator (usually included with Qt development environment.  see download.qt.io)</br>
-3. One of the sdk's for MT.exe (Manifest Tool)</br>
-4. InnoSetup is a good tool for creating an Install package. Example scripts are included</br>
-5. You need at least 1 windows SDK downloaded for mt.exe</br>
-6. When you build, build a 32 bit version so you are compatile back to Windows XP</br>
+3. InnoSetup is a good tool for creating an Install package. Example scripts are included</br>
+4. You need at least 1 windows SDK downloaded for mt.exe</br>
+5. When you build, build a 32 bit version so you are compatile back to Windows XP</br>
 </br>
 <b>Mac Build:</b></br>
 1. XCode is required to be installed (contains SDK)</br>
