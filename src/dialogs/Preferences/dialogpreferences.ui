@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogPreferences</class>
+ <widget class="QDialog" name="DialogPreferences">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>423</width>
+    <height>691</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Preferences</string>
+  </property>
+  <widget class="QGroupBox" name="gbFontSize">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>380</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Font Size and Strongs Color</string>
+   </property>
+   <widget class="QSlider" name="sliderFontSize">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>35</y>
+      <width>261</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>35</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Font Size</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>70</y>
+      <width>336</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="SliderRed">
+    <property name="geometry">
+     <rect>
+      <x>75</x>
+      <y>95</y>
+      <width>286</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="SliderGreen">
+    <property name="geometry">
+     <rect>
+      <x>75</x>
+      <y>135</y>
+      <width>286</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="SliderBlue">
+    <property name="geometry">
+     <rect>
+      <x>75</x>
+      <y>170</y>
+      <width>286</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_Red">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>95</y>
+      <width>46</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Red</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_Green">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>135</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Green</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_Blue">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>46</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Blue</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="gbDictionaries">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>300</y>
+     <width>380</width>
+     <height>96</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Dictionaries</string>
+   </property>
+   <widget class="QCheckBox" name="cbEnableStrongs">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>30</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enable Strongs</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbEnglish">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>30</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enable Websters</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbBlendStrongs">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>60</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Do Not Show Strongs Numbers</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>410</y>
+     <width>380</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Search Parameters</string>
+   </property>
+   <widget class="QCheckBox" name="cbThisBook">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>35</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>This Book</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbOT">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>35</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Old Testament</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbNT">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>35</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>New Testament</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pbOK">
+   <property name="geometry">
+    <rect>
+     <x>155</x>
+     <y>650</y>
+     <width>114</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="gbDebug">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>565</y>
+     <width>380</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Debug Settings</string>
+   </property>
+   <widget class="QCheckBox" name="cbDebugHTML">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>25</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Debug HTML</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbEnableMenus">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>25</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Menus</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbSQLExec">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>50</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SQLExecErr</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbEditVerses">
+    <property name="geometry">
+     <rect>
+      <x>115</x>
+      <y>25</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit Verses</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>225</y>
+     <width>380</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Show In-Verse Selects</string>
+   </property>
+   <widget class="QCheckBox" name="cbShowBookmark">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>35</y>
+      <width>187</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show BookMark Tag</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbShowCopyIt">
+    <property name="geometry">
+     <rect>
+      <x>231</x>
+      <y>35</y>
+      <width>136</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show Copy Tag</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>19</x>
+     <y>490</y>
+     <width>381</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>CWP Books Directory</string>
+   </property>
+   <widget class="QLabel" name="lb_CWP_Directory">
+    <property name="geometry">
+     <rect>
+      <x>81</x>
+      <y>20</y>
+      <width>298</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbChangeCWPDirectory">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>15</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbShowCWPDirectory_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>45</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reveal</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

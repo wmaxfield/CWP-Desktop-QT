@@ -1,0 +1,22 @@
+#
+*.exe
+# following is for Macintosh file system
+._*
+.DS_Store
+
+# Qmake and build artifacts
+.qmake*
+*.[oa]
+*.app
+
+# I name things .old when I am through with them,
+# don't save those files
+*.old
+
+#ignore qtcreator user specific files
+*.user.*
+*.user
+
+#ignore build directories
+# the directory must have the word "build" in it
+*build*

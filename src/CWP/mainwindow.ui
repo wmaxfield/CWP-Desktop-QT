@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>887</width>
+    <height>563</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>500</y>
+      <width>114</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Animate</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>887</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuBooks">
+    <property name="title">
+     <string>Books/Bibles</string>
+    </property>
+    <addaction name="actionSelect_Bibles"/>
+   </widget>
+   <widget class="QMenu" name="menuSearch">
+    <property name="title">
+     <string>Search</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuEditDBs">
+    <property name="title">
+     <string>Edit DBs</string>
+    </property>
+    <addaction name="actionTagalog"/>
+    <addaction name="actionCreate_translation_template"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionShow_Help"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuBooks"/>
+   <addaction name="menuSearch"/>
+   <addaction name="menuHelp"/>
+   <addaction name="menuEditDBs"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>48</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionLeft"/>
+   <addaction name="actionRight"/>
+   <addaction name="actionBibleBooks"/>
+   <addaction name="actionBooksInBible"/>
+   <addaction name="actionHistory"/>
+   <addaction name="actionSearch_2"/>
+   <addaction name="actionBookMark"/>
+   <addaction name="actionBible_Dictionary"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionSelect_Bibles">
+   <property name="text">
+    <string>Select Bibles</string>
+   </property>
+  </action>
+  <action name="actionBookMark">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/open_bible.png</normaloff>:/icons/Pics/open_bible.png</iconset>
+   </property>
+   <property name="text">
+    <string>BookMark</string>
+   </property>
+   <property name="toolTip">
+    <string>Book Marks</string>
+   </property>
+  </action>
+  <action name="actionLeft">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/backNavTest2.png</normaloff>:/icons/Pics/backNavTest2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Previous</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous Chapter</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+P</string>
+   </property>
+  </action>
+  <action name="actionRight">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/forwardNavTest2.png</normaloff>:/icons/Pics/forwardNavTest2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="toolTip">
+    <string>Next Chapter</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+N</string>
+   </property>
+  </action>
+  <action name="actionBibleBooks">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/closed_bible.png</normaloff>:/icons/Pics/closed_bible.png</iconset>
+   </property>
+   <property name="text">
+    <string>BibleBooks</string>
+   </property>
+   <property name="toolTip">
+    <string>Bibles and Books</string>
+   </property>
+  </action>
+  <action name="actionBooksInBible">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/Bible_open.png</normaloff>:/icons/Pics/Bible_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>BooksInBible</string>
+   </property>
+   <property name="toolTip">
+    <string>Select a Book from the Bible</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+B</string>
+   </property>
+  </action>
+  <action name="actionHistory">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/stopwatch-md.png</normaloff>:/icons/Pics/stopwatch-md.png</iconset>
+   </property>
+   <property name="text">
+    <string>History</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous Verses</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+H</string>
+   </property>
+  </action>
+  <action name="actionSearch_2">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/Magnifying_Glass_1.png</normaloff>:/icons/Pics/Magnifying_Glass_1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+   <property name="toolTip">
+    <string>Search in Text</string>
+   </property>
+  </action>
+  <action name="actionBible_Dictionary">
+   <property name="icon">
+    <iconset resource="pictureResources.qrc">
+     <normaloff>:/icons/Pics/dictionary_pictogram.png</normaloff>:/icons/Pics/dictionary_pictogram.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bible Dictionary</string>
+   </property>
+   <property name="toolTip">
+    <string>Smith's Bible Dictionary</string>
+   </property>
+  </action>
+  <action name="actionTagalog">
+   <property name="text">
+    <string>Tagalog</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionCreate_translation_template">
+   <property name="text">
+    <string>Create Translation Template</string>
+   </property>
+   <property name="toolTip">
+    <string>Create Translation Template files in directory of your choice</string>
+   </property>
+  </action>
+  <action name="actionShow_Help">
+   <property name="text">
+    <string>Show Help</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="pictureResources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

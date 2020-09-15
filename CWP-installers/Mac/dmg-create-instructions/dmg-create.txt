@@ -1,0 +1,55 @@
+Create a blank disk image for storage
+
+Build CWP on (at the latest) OSX 10.10
+
+You can create an empty disk image, add data to it, then use it to create disks, CDs, or DVDs.
+
+USE 10.9.5 to create disk image (Background images are not backwards compatible in OSX)
+
+In the Disk Utility app  on your Mac, choose File > New  > Blank Disk Image.
+
+Enter a filename for the disk image, add tags if necessary, then choose where to save it.
+
+This is the name that appears in the Finder, where you save the disk image file before opening it.
+
+In the Name field, enter the name for the disk image.
+
+This is the name that appears on your desktop and in the Finder sidebar, after you open the disk image.
+
+In the Size field, enter a size for the disk image.
+
+Click the Format pop-up menu, then choose the format for the disk:
+
+If the disk image will be used with a Mac that has a solid state drive (SSD) and uses macOS 10.13 or later, choose APFS or APFS (Case-sensitive).
+
+If the disk image will be used with a Mac with macOS 10.12 or earlier, choose Mac OS Extended (Journaled) or Mac OS Extended (Case-sensitive, Journaled).
+
+If the disk image will be used with a Mac or Windows computer and is 32 GB or less, choose MS-DOS (FAT); if it’s over 32 GB, choose ExFAT.
+
+To encrypt the disk image, click the Encryption pop-up menu, then choose an encryption option.
+
+Click the Partitions pop-up menu, then choose a partition layout.
+
+Click the Image Format pop-up menu, then choose an option:
+
+Sparse bundle disk image: Same as a sparse disk image (below), but the directory data for the image is stored differently. Uses the .sparsebundle file extension.
+
+Sparse disk image: Creates an expandable file that shrinks and grows as needed. No additional space is used. Uses the .sparseimage file extension.
+
+Read/write disk image: Allows you to add files to the disk image after it’s created. Uses the .dmg file extension.
+
+DVD/CD master: Changes the size of the image to 177 MB (CD 8 cm). Uses the .cdr file extension.
+
+Click Save, then click Done.
+
+Disk Utility creates the disk image file where you saved it in the Finder and mounts its disk icon on your desktop and in the Finder sidebar.
+
+In the Finder, copy your files to the mounted disk image, then eject it.
+
+OPEN THE DISK IMAGE
+SIZE THE WINDOW
+RIGHT CLICK AND CHOOSE BACKGROUND PICTURE
+DRAG THE APPLICATION LINK AND CWP INTO THE WINDOW
+EJECT
+IN DISK UTILITY CHOOSE Menu item Images-> Convert, select CWP.dmg, then select “compressed” to compress THE .dmg IMAGE
+

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CreateBibleDialog</class>
+ <widget class="QDialog" name="CreateBibleDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>891</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="pbClose">
+   <property name="geometry">
+    <rect>
+     <x>745</x>
+     <y>280</y>
+     <width>113</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="teCopyright">
+   <property name="geometry">
+    <rect>
+     <x>45</x>
+     <y>40</y>
+     <width>336</width>
+     <height>171</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblCopyright">
+   <property name="geometry">
+    <rect>
+     <x>49</x>
+     <y>10</y>
+     <width>331</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bible Copyright Text</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="leSchema">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>145</y>
+     <width>306</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbSelectSchema">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>140</y>
+     <width>141</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Select Schema</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="leBibleDirectory">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>185</y>
+     <width>306</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbSelectBibleDirectory">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>180</y>
+     <width>141</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Select Directory</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="leBibleName">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>50</y>
+     <width>306</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblBibleName">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>30</y>
+     <width>306</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bible File Name</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbCreateBible">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>435</x>
+     <y>215</y>
+     <width>251</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Create Bible</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="leshell">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>265</y>
+     <width>701</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbexec">
+   <property name="geometry">
+    <rect>
+     <x>265</x>
+     <y>295</y>
+     <width>246</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>execute shell command</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbReadCopyrightFIle">
+   <property name="geometry">
+    <rect>
+     <x>52</x>
+     <y>215</y>
+     <width>321</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Read Copyright FIle</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="leBibleTitle">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>105</y>
+     <width>306</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblBibleName_2">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>85</y>
+     <width>306</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bible Title</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,3 @@
+add the following libraries for Qt on some linux versions:
+sudo apt-get install libglu1-mesa-dev
+

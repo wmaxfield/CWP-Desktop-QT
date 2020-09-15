@@ -1,0 +1,4 @@
+#include <windows.h>
+
+ID_ICON ICON DISCARDABLE "icon_mwG_icon"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "cwp.exe.manifest"

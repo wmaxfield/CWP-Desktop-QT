@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Pics/backNavTest2.png</file>
+        <file>Pics/forwardNavTest2.png</file>
+        <file>Pics/bibleBooksButton.png</file>
+        <file>Pics/booksButton.png</file>
+        <file>Pics/settingsButton.png</file>
+        <file>Pics/notesButton.png</file>
+        <file>Pics/historyButton2.png</file>
+        <file>Pics/cwLogo.png</file>
+        <file>Pics/bookmarksButton.png</file>
+        <file>Pics/commentaryBooksButton.png</file>
+        <file>Pics/stopwatch-md.png</file>
+        <file>Pics/open_bible.png</file>
+        <file>Pics/closed_bible.png</file>
+        <file>Pics/Bible_open.png</file>
+        <file>Pics/search_ideogram.png</file>
+        <file>Pics/Magnifying_Glass_1.png</file>
+        <file>Pics/smallgear.png</file>
+        <file>Pics/sweep.png</file>
+        <file>Pics/Old_book.png</file>
+        <file>Pics/dictionary_pictogram.png</file>
+        <file>Pics/non-italic.png</file>
+        <file>Pics/boldOn.png</file>
+        <file>Pics/ITALIC.png</file>
+        <file>Pics/icon75x75.png</file>
+        <file>icon/CWPIcon256x256.png</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>
