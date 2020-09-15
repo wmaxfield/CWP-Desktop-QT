@@ -22,5 +22,5 @@ QT development environment for MSVC 5.5.1 (or possily later) either QWebKit or Q
 </br>
 <b>Linux Build:</b></br>
 1. Install qtcreator (sudo apt-get install qtcreator)</br>
-2. Project will use linuxdeployqt if installed.</br>
+2. Project will use linuxdeployqt if installed in path.  linuxdeployqt requires you to build on Ubuntu 14. (Their desire is to run on maximum number of systems.)</br>
 </br>
