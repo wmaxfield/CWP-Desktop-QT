@@ -30,7 +30,8 @@
 #
 #-------------------------------------------------
 # Build notes:
-#  You will have to configure your project to get debug features.
+#  You will have to configure your project to get debug features at launch of CWP.
+#  When you launch CWP with -debug command line option, it enables debug menus.
 #  Build tested down to Qt 5.5.1 and up to Qt 5.14
 #
 # Windows: Need at least 1 sdk.  Microsoft Visual Studios is easiest to install.
