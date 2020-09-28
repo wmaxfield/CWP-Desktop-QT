@@ -48,6 +48,11 @@ DialogAddTopic::~DialogAddTopic()
     delete ui;
 }
 
+void DialogAddTopic::showEvent(QShowEvent *e)
+{
+    ui->lineEditTopic->setFocus();
+}
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void DialogAddTopic::on_buttonBox_accepted()

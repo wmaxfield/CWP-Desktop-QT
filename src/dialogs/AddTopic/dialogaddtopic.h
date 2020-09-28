@@ -14,6 +14,7 @@ class DialogAddTopic : public QDialog
 public:
     explicit DialogAddTopic(QWidget *parent = 0);
     ~DialogAddTopic();
+    void showEvent(QShowEvent *e);
     
 private slots:
     void on_buttonBox_accepted();
