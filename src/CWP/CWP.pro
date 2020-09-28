@@ -427,7 +427,7 @@ linux {
         !isEmpty(target.path): INSTALLS += target
 
         # copy the CWPFiles (bibles, dictionaries)
-        MY_OTHER_FILES = $$OUT_PWD/../../CWPfiles
+        MY_OTHER_FILES = $$PWD/../../CWPfiles
 
         QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$shell_quote($$MY_OTHER_FILES) $$shell_quote($$OUT_PWD/$$TARGET"."$$APPDIR/usr/bin) $$escape_expand(\\n\\t)
 # below failed, but works from command line.  go figure
@@ -751,3 +751,8 @@ win32 {
 # did not work
 #RC_FILE  = icon/cwp.rc
 }
+
+DISTFILES += \
+    ../../Docs/CrosswordBibleDatabaseFormat.doc \
+    ../../Docs/PuttingBiblesOniPad.doc \
+    ../../sql/bbl_schema2.sql

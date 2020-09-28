@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#include "mainwindow.h"
+*/
+#include "mainwindow.h"
 #include <QApplication>
 #include "initialization.h"
 #include <QString>
