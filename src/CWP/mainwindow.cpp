@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#ifdef WEBENGINE_USED
+*/
+#ifdef WEBENGINE_USED
 #undef WEBKIT_USED
 #endif
 #include "mainwindow.h"
@@ -126,11 +127,10 @@ static void handleDebugWebWindowShow(QString vp) {
 }
 
 // ------------------------------------------------------------------------
+// bookmark handler is always created (is delete on close)
 // ------------------------------------------------------------------------
 void handleBookMarkWindow(){
-    if (!bmh)
-        bmh = new BookMarkHandler(nullptr);
-
+   // bmh was set up by calling function
     bmh->show();
 }
 
@@ -1687,19 +1687,14 @@ void MainWindow::showBookMarkAdd(QString bookNumber,/* Chapter:*/ QString lchapt
     Q_UNUSED(lverse);
    // Q_UNUSED();
 
-    bmh = new BookMarkHandler(0);
+    bmh = new BookMarkHandler(0,bookNumber.toInt(),lchapter.toInt(),lverse.toInt(),NO);
 
-    bmh->bookNumber = bookNumber;
-    bmh->chapter = lchapter;
-    bmh->verse = lverse;
-    bmh->isTextBook = NO;
 
     // using a timer fixes the bug where the macintosh menu stayed selected.
     if (!bmhTimer)
         bmhTimer = new TimerClass(50,YES,(void*)handleBookMarkWindow);
     else
         bmhTimer->start(50);
-    // test action.  will use the "B" in the text later
 
 
 }

@@ -25,12 +25,15 @@ class BookMarkHandler : public QMainWindow //public QDialog
     
 public:
     explicit BookMarkHandler(QWidget *parent = 0);
+    BookMarkHandler(QWidget *parent, int book, int ch, int v,int _isTextBook);
     ~BookMarkHandler();
     void showEvent(QShowEvent *e);
     void            makeBookMarkWheel();
     void            doUpdate();
 
     QLabel          *labelVerse;
+    QLabel          *labelLine;
+    QLabel          *labelLine2;
     QPushButton *buttonAddBookmark;
     QWidget         *mBookMarks;
 
@@ -39,9 +42,9 @@ public:
     QGridLayout     *grid;
 
     uint16_t        isTextBook;
-    QString         bookNumber;
-    QString         chapter;
-    QString         verse;
+    int         bookNumber;
+    int         chapter;
+    int         verse;
     int             selectedRow;
     int             refreshPicker;
 
@@ -49,12 +52,14 @@ public:
 
     TimerClass      *addBookMarkTimer;
 
+
 public slots:
 
     void stop(int index);
     void topicButtonClicked();
     void pbOK_clicked();
     void onAddBookMarkClicked();
+    void deleteTopicButtonClicked();
 private:
     Ui::BookMarkHandler *ui;
     int             wheelRow;

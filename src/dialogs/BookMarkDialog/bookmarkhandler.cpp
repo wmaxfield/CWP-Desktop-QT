@@ -41,15 +41,15 @@ extern BookMarkHandler *bmh;
 void BookMarkHandler::showEvent(QShowEvent *e){
     Q_UNUSED(e);
     if (isTextBook) {
-        //pickerViewArray = [gBookBookMarkDB getTopicArray];
-        labelVerse->setText( TextBook(bookNumber.toInt() )+QString(" ")+chapter+QString(":")+verse);
-        buttonAddBookmark->setText("Add bookmark to selected Topic");
+        labelVerse->setText( TextBook(bookNumber )+QString(" ")+QString::number(chapter)+QString(":")+QString::number(verse));
+        buttonAddBookmark->setText(tr("Add bookmark to selected Topic"));
     } else {
-        //pickerViewArray = [gBookMarkDB getTopicArray];//[[NSArray arrayWithObjects:@"hello",@"test",nil] retain];
-        labelVerse->setText(BibleBook(bookNumber.toInt() )+QString(" ")+chapter+QString(":")+verse);
-        buttonAddBookmark->setText("Add verse to selected Topic");// forState:UIControlStateNormal];
+        labelVerse->setText(BibleBook(bookNumber )+QString(" ")+QString::number(chapter)+QString(":")+QString::number(verse));
+        buttonAddBookmark->setText(tr("Bookmark verse under selected Topic"));
     }
 }
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void BookMarkHandler::on_actionAlways_on_Top_triggered(bool checked)
 {
     Qt::WindowFlags flags = this->windowFlags();
@@ -67,7 +67,6 @@ void BookMarkHandler::on_actionAlways_on_Top_triggered(bool checked)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 BookMarkHandler::BookMarkHandler(QWidget *parent) :
-    //QDialog(parent),
     QMainWindow(parent),
     ui(new Ui::BookMarkHandler)
 {
@@ -78,7 +77,36 @@ BookMarkHandler::BookMarkHandler(QWidget *parent) :
     m_wheel1=0;
 
     makeBookMarkWheel();
-    setCentralWidget(mBookMarks);
+    setCentralWidget(mBookMarks);// put onto screen
+    addBookMarkTimer=0; // zero out for later
+
+    this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
+     //this->setModal(true);
+    on_actionAlways_on_Top_triggered(true);
+    isTextBook=NO;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+BookMarkHandler::BookMarkHandler(QWidget *parent,int book,int ch, int v,int _isTextBook) :
+    QMainWindow(parent),
+    ui(new Ui::BookMarkHandler)
+{
+    bookNumber=book;
+    chapter = ch;
+    verse = v;
+    isTextBook = _isTextBook;
+
+
+    ui->setupUi(this);
+    touch = false; // true for phones???
+    labelVerse = new QLabel("verse");
+    labelLine  = new QLabel(" ");
+    labelLine2 = new QLabel(" ");
+    buttonAddBookmark = new QPushButton(tr("    Add Book Mark    "));
+    m_wheel1=0;
+
+    makeBookMarkWheel();
+    setCentralWidget(mBookMarks);// put onto screen
     addBookMarkTimer=0; // zero out for later
 
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
@@ -96,13 +124,11 @@ BookMarkHandler::~BookMarkHandler()
         delete addBookMarkTimer;
 
     delete labelVerse;
+    delete labelLine;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void BookMarkHandler::stop(int index) {
-  //static int stopcount;
- //Qt::MouseButtons b = QApplication::mouseButtons();
-  //stopcount++;
   selectedRow = index;
 }
 //-----------------------------------------------------------------------------
@@ -112,9 +138,7 @@ void BookMarkHandler::onAddBookMarkClicked(){
         MsgBox("You must have some topics before adding a bookmark! Press 'Add A Topic'.");
         return;
     }
-  //  DialogAddTopic *dat = new DialogAddTopic(this);// set for delete on close
 
-   // dat->show();
     if (selectedRow> pickerViewArray.count()-6)
         selectedRow =pickerViewArray.count()-6;
 
@@ -124,8 +148,8 @@ void BookMarkHandler::onAddBookMarkClicked(){
     QString topic;
 
     topic = pickerViewArray[selectedRow];
-    gBookMarkDB->addBookmarkUnderTopic(topic,/* usingBook:*/bookNumber, /* andChapter:*/chapter,/* andVerse*/verse,/* isTexBook:*/isTextBook);
-    Preferences->setCurrentVerse(verse.toInt()); // set the verse for any navigation away from this page for history purposes
+    gBookMarkDB->addBookmarkUnderTopic(topic,/* usingBook:*/QString::number(bookNumber), /* andChapter:*/QString::number(chapter),/* andVerse*/QString::number(verse),/* isTexBook:*/isTextBook);
+    Preferences->setCurrentVerse(verse); // set the verse for any navigation away from this page for history purposes
     close();// we are finished
 }
 
@@ -139,10 +163,8 @@ void BookMarkHandler::doUpdate(){
     m_wheel1 = new StringWheelWidget(touch);
 
     pickerViewArray = gBookMarkDB->getTopicArray();
-    // only make wheel movable if more than one bookmark
-    //if (BookMarks.count()>1)
-        for (int k = 0 ; k < 5; k++)
-            pickerViewArray.append("");
+     for (int k = 0 ; k < 5; k++)
+        pickerViewArray.append("");
 
 
 
@@ -159,8 +181,24 @@ void BookMarkHandler::topicButtonClicked(){
     dat->show();
 
 }
-
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void BookMarkHandler::deleteTopicButtonClicked(){
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, tr("Delete Topic"), tr("Delete This Topic?"),
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          QString topic;
+
+          topic = pickerViewArray[selectedRow];
+        gBookMarkDB->deleteBookMarkTopicOrCategory(topic);
+      } else {
+        //qDebug() << "Yes was *not* clicked";
+          return;
+      }
+}
+//-----------------------------------------------------------------------------
+// create the wheel and the buttons around it
 //-----------------------------------------------------------------------------
 void BookMarkHandler::makeBookMarkWheel()
 {
@@ -177,13 +215,19 @@ void BookMarkHandler::makeBookMarkWheel()
 
     int row = 0;
 
-    //BookMarks << "Red" << "Magenta" << "Peach" << "Orange" << "Yellow" << "Citro" << "Green" << "Cyan" << "Blue" << "Violet";
- //   labelVerse = new QLabel("verse");
     grid->addWidget(labelVerse,row++,0,1,20, Qt::AlignHCenter);
 
     QPushButton *NewTopicButton = new QPushButton(tr("  New Topic "));
     connect(NewTopicButton, SIGNAL(clicked()), this, SLOT(topicButtonClicked()));
-    grid->addWidget(NewTopicButton,row++,0,1,20, Qt::AlignHCenter);
+    grid->addWidget(NewTopicButton,row,0,1,20, Qt::AlignRight);
+
+    QPushButton *DeleteTopicButton = new QPushButton(tr("  Delete Topic "));
+    connect(DeleteTopicButton, SIGNAL(clicked()), this, SLOT(deleteTopicButtonClicked()));
+    grid->addWidget(DeleteTopicButton,row++,0,1,20, Qt::AlignLeft);
+
+    // add a line to do some visual separation from delete/add buttons
+    grid->addWidget(labelLine,row++,0,1,20, Qt::AlignHCenter);
+
 
     wheelRow=row;
     doUpdate();
@@ -195,8 +239,8 @@ void BookMarkHandler::makeBookMarkWheel()
     grid->addWidget( buttonAddBookmark, row++, 0,1,20, Qt::AlignHCenter);//, 1, 3 );
 
 
-   QLabel *l = new QLabel("  ");
-   grid->addWidget( l, row++, 0,1,20, Qt::AlignHCenter);//, 1, 3 );
+ //  QLabel *l = new QLabel("  ");
+   grid->addWidget( labelLine2, row++, 0,1,20, Qt::AlignHCenter);//, 1, 3 );
 
    QPushButton *shakeButton = new QPushButton(tr("    Cancel    "));
    connect(shakeButton, SIGNAL(clicked()), this, SLOT(pbOK_clicked()));
@@ -207,8 +251,6 @@ void BookMarkHandler::makeBookMarkWheel()
 //-----------------------------------------------------------------------------
 void BookMarkHandler::pbOK_clicked()
 {
-
-
     fvcp->activateWindow();
     close();
 }
