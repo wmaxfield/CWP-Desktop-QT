@@ -1,6 +1,6 @@
 # CWP-Desktop-QT</br>
 </br>
-Build using QtCreator.  Tested on Qt 5.51 through Qt 5.14</br>
+Build using QtCreator.  Tested on Qt 5.32 through Qt 5.14</br>
 </br>
 <b>Crossword Project Bible Study Program for the desktop</b></br>
 General Notes: (see CWP.pro for more details) </br>
