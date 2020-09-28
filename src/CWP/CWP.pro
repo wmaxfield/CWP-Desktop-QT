@@ -32,43 +32,50 @@
 # Build notes:
 #  You will have to configure your project to get debug features at launch of CWP.
 #  When you launch CWP with -debug command line option, it enables debug menus.
-#  Build tested down to Qt 5.5.1 and up to Qt 5.14
+#  Build tested down to Qt 5.3.2 and up to Qt 5.14
 #
 # Windows: Need at least 1 sdk.  Microsoft Visual Studios is easiest to install.
-#          You can build to local directory with source on remote server
-#          even under shadow build and still debug
+#          You CAN build to local directory with source on remote server
+#          even under shadow build and still debug!  (The one thing Windows got right)
 #
 # Mac: XCode is required to be installed. (It contains sdk).
 #      You must follow shadow build rules for directory, which means the
-#      directory shows up in your project folder and must be deleted before commits, OR
-#      you must set up your build directory to have the word "build" in it an set the
+#      directory shows up in your project folder and must be deleted before commits,
+#      OR
+#      you must set up your build directory to have the word "build" in it and set the
 #      .gitignore file to have *build* on a line to make sure those are excluded
 #
 #      If you get an error "no file at "/opt/local/lib/mysql55/lib/libmysqlclient.18.dylib" THEN
 #      locate libmysqlclient.18.dylib in your Qt Creator app and copy to "/opt/local/lib/mysql55/lib/"
 #      directory that was referenced in error message. (may need to create it)
 #      This is safe to do because libmysqlclient is not used, just asked for by the macdeployqt
+#      but under certain versions of Qt it causes a build error
 #
-#      Later Mac/Qt Build forces some gaming library links that are not available on
+# Maximum Platform Deployment (Mac)
+#      Later Mac/Qt Builds force some gaming library links that are not available on
 #      10.8, 10.9, 10.10, etc.,
-#      This requires you compile on a VM *before* that library is required by Qt.
+#      This requires you compile on an OSX verions *before* that library is required by Qt.
 #
-#      Build on VM OSX 10.10 in order to work on 10.8.5.
-#      *MUST BUILD LOCALLY, NOT ON "shared" DRIVE. CLANG FAILS on shared*
+#      Build on VM containing at least OSX 10.10 in order to work on 10.8.5.
+#      *MUST BUILD LOCALLY, NOT ON "shared" DRIVE. CLANG FAILS on shared drives*
 #      THAT MEANS YOU CAN'T DEBUG ON OLDER MACS USING REMOTE SHARED DRIVE
-
-# Linux: Install QTCreator (sudo apt-get install qtcreator)
+#
+#      I have been unable to get Qt version 5.6 to debug on Macintosh, so debugging is done on
+#      Qt Version 5.3.2.
+#
+# Linux Built Note: Install QTCreator (Ubuntu: sudo apt-get install qtcreator)
 #        See Macintosh Note on shadow build.
 #        Very little time spent on Linux builds as main devl platform is Mac
-#        LinuxDeployQt is in helpers folder Linux folder.
-#        LinuxDeployQt is hard coded to only run on Ubuntu 14
+#
+#        LinuxDeployQt is included in helpers folder / Linux folder.
+#        LinuxDeployQt is hard coded (by creators) to only run on Ubuntu 14
 #        for now.  That may change in the future, keep a watch for that.
-#        That allows running on multiple platforms from Ubuntu 14 forward.
+#        That hard coding allows running on multiple platforms from Ubuntu 14 forward.
 #-------------------------------------------------
 # QtWebkit history:
-# tldr; fixed webkit compile for mingw (win), linux, mac
+# tldr; could not use 3rd party library, fixed code for webkit compile for mingw (win), linux, mac
 #
-# Trying for only using webkit rather than webengine (was too lazy at the time),
+# Trying for only using webkit rather than webengine (was too much happening to migrate to webengine ),
 # I picked up latest qwebkit from https://github.com/qtwebkit/qtwebkit/releases/tag/qtwebkit-tp5
 # and hand installed into my C:\Qt\Qt5.12.5\5.12.5\mingw73_64 directory
 # by moving files into matching directories.
@@ -78,12 +85,11 @@
 # So, adapted to qwebengine, BUT requires Visual Studio install to get msvc compiler for webengine
 # Note: MINGW DOES NOT INCLUDE qwebengine!!!!! (but it does include qtwebkit)
 #
-# Updated to allow either MinGW or MVSC compile, either webengine or webkit.
-# webengine automatically selected for Qt version ABOVE 5.5.
+# Updated: Code changed to allow either MinGW or MVSC compile, either webengine or webkit.
+# webengine automatically selected for Qt version ABOVE 5.5, except linux
 #-------------------------------------------------
 #-------------------------------------------------
-# QT CREATOR
-# Windows:
+# QT CREATOR Windows:
 # To get qtcreator larger font size for compile output, etc. use stylesheet. (google it)
 # example startup for windows batch file or desktop launcher:
 #C:\Qt\Tools\QtCreator\bin\qtcreator.exe -stylesheet C:\Qt\Tools\QtCreator\bin\qtcreatorstyle.css.txt
@@ -93,14 +99,17 @@
 #{
 #font: 18pt "Courier New"; font-weight: bold;
 #}
+#
+#TESTING
+#
 #-----------------------------------------------------------
-# CWP: Tested on XP, win 7, win 10.  With 1 or 2 CPU cores,
+# CWP Windows: Tested on XP, win 7, win 10.  With 1 or 2 CPU cores,
 # navigation to exact verse can fail, fixed by repeating
 # navigation calls.  After testing, can fail on
 # older Macintosh, so made fix universal
 #-----------------------------------------------------------
 #-------------------------------------------------
-# Linux Notes:
+# Linux Build Notes:
 #
 # Build on Ubuntu 14.  64 bit (for linuxdeployqt)
 #
@@ -117,6 +126,7 @@
 # WebKit: (qt 5.12 qwebengine not available on lubuntu)
 # run the following install command:
 # sudo apt-get install libqt5webkit5 libqt5webkit5-dev
+#
 #-------------------------------------------------------------------------------------
 # All Builds
 #-------------------------------------------------------------------------------------
@@ -125,8 +135,8 @@
 #{
 #    const void *ptr = nullptr; // work-around for MSVC's/CLANG's reinterpret_cast bug
 #
-#    return qHash(reinterpret_cast<quintptr>(ptr), seed);
-#   // return qHash(reinterpret_cast<quintptr>(nullptr), seed);
+#    return qHash(reinterpret_cast<quintptr>(ptr), seed);//<-- this line fixes errors
+#   // return qHash(reinterpret_cast<quintptr>(nullptr), seed);<-- this line causes errors
 #}
 #
 
@@ -137,23 +147,42 @@ linux {
         CONFIG += webkit #webkit build
         message("qwebkit build")
 } else {
+    # windows Qt 5.5.1 includes webkit on mingw, not on msvc
     greaterThan(QT_MAJOR_VERSION,4):greaterThan(QT_MINOR_VERSION,5) {
         #  for webengine (Qt 5.6 and above)
         CONFIG += qwebengine
         message("qwebengine build")
     }
 }
+#-----------------------------------------------------------------------
+# if qwebengine is defined, then include correct qt
+# under linux, ubuntu, "sudo apt-get install qtwebengine5-dev"
+# under windows, qtwebengine only available on msvc install (as of 06-2020)
+# under Mac, qtwebengine install is an option in the install package
+#-----------------------------------------------------------------------
+qwebengine {
+    message("QWebEngine build")
+    QT       += webengine webenginewidgets
+    DEFINES  += WEBENGINE_USED=1
+}else{
+    #-----------------------------------------------------------------------
+    # otherwise it is webkit, so include correct qt libs
+    #-----------------------------------------------------------------------
+    message("QWebKit build")
+    DEFINES  += WEBKIT_USED=1
+    QT += webkit webkitwidgets
+}
 #----------------------------------------------------------
 # the following also works, can be used for qmake variables
 #QMAKE_CWP_TITLE='CWP Teacher Bible Study Program'
 #DEFINES += 'CWP_TITLE_STRING=\'\"$${QMAKE_CWP_TITLE}\"\''
 #----------------------------------------------------------
-# have to use \'\"txt\"\' for clang command line
+# have to use this format:  \'\"txt\"\' to avoid clang command line quote swallowing
 DEFINES += 'CWP_TITLE_STRING=\'\"CWP Bible Study Program\"\''
 
-DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.4\"\''
+DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.5\"\''
 #win32 {
-    VERSION = 1.0.4
+    VERSION = 1.0.5
     QMAKE_TARGET_COMPANY = Crossword Project
     QMAKE_TARGET_PRODUCT = CWP
     QMAKE_TARGET_DESCRIPTION = Bible Study Program
@@ -187,12 +216,13 @@ CONFIG(release, debug|release) {# release
 #-----------------------------------------------------------------------
 # if is debug mode, set debug defines and config
 #-----------------------------------------------------------------------
-CONFIG(debug, debug|release) {# debug
+CONFIG(debug, debug|release) {
+    # this is debug build
     message( "debug: working directory-->" $$PWD )
     # don't try bundle_bibles on linux during debug
-macx|win32 {
-    CONFIG += bundle_bibles
-}
+    macx|win32 {
+        CONFIG += bundle_bibles
+    }
     #CONFIG += force_rebuild_of_important_files
     DEFINES += "RELEASE_VERSION=0"
     DEFINES += "ENABLE_EDIT=1"
@@ -231,24 +261,7 @@ win32 {
 }
 #####################################################################################################
 
-#-----------------------------------------------------------------------
-# if is qwebengine, then include correct qt
-# under linux, ubuntu, "sudo apt-get install qtwebengine5-dev"
-# under windows, qtwebengine only available on msvc install (as of 06-2020)
-# under Mac, qtwebengine install is an option in the install package
-#-----------------------------------------------------------------------
-qwebengine {
-    message("QWebEngine build")
-    QT       += webengine webenginewidgets
-    DEFINES  += WEBENGINE_USED=1
-}else{
-    #-----------------------------------------------------------------------
-    # otherwise it is webkit, so include correct qt libs
-    #-----------------------------------------------------------------------
-    message("QWebKit build")
-    DEFINES  += WEBKIT_USED=1
-    QT += webkit webkitwidgets
-}
+
 #-----------------------------------------------------------------------
 #-----------------------------------------------------------------------
 
@@ -280,8 +293,14 @@ TEMPLATE = app
 # and for the Info.Plist.app to be found by qmake.
 ICON = icon/CWPIcon.icns
 
+#----------------------------------------------------------------------------------------
+# General Note:  The following causes shell command to be executed.  If not included, use ';'
+# but at some point the following *must* be used
+# $escape_expand(\n\t)
+#----------------------------------------------------------------------------------------
+
 #========================================================================================================
-# settings, and copy files after build section
+# Macintoish settings, and copy files after build section
 #========================================================================================================
 macx {
 
@@ -319,7 +338,7 @@ macx {
 
 }#macx
 #========================================================================================================
-# manipulate built files
+# Windows manipulate built files
 #========================================================================================================
 win32 {
       QMAKE_POST_LINK += $$escape_expand(\\n\\t)
@@ -395,7 +414,7 @@ win32 {
     }#bundle_bibles
 }
 #========================================================================================================
-# copy files after build section
+# Linux, includes copy files after build section
 #========================================================================================================
 linux {
 
@@ -419,7 +438,7 @@ linux {
 
     #========================================================================================================
     # copy files into the app folder if release mode
-    #CONFIG(release, debug|release) <-- this provides a "RELEASE" indicator
+    #CONFIG(release, debug|release){ ... } <-- this provides a "RELEASE" switch to do work at release
     #========================================================================================================
     # if bundle set, copy files over
     bundle_bibles {
@@ -461,7 +480,7 @@ linux {
 #-----------------------------------------------------------------------
 # Compiler settings
 #-----------------------------------------------------------------------
-# macx start
+# macintosh start
 #-----------------------------------------------------------------------
 macx {
     message("Mac build")
@@ -483,12 +502,11 @@ macx {
     }
 }
 #-----------------------------------------------------------------------
-# macx end
+# macintosh end
 #-----------------------------------------------------------------------
 #-----------------------------------------------------------------------
 # linux compiler start
 #-----------------------------------------------------------------------
-
 linux {
     message("Linux build")
     GPP_VERSION = $$system("g++ --version")
@@ -509,6 +527,8 @@ linux {
 #-----------------------------------------------------------------------
 # linux end
 #-----------------------------------------------------------------------
+
+
 #-----------------------------------------------------------------------
 # Windows Compiler settings
 #-----------------------------------------------------------------------
@@ -517,7 +537,7 @@ win32|win64 {
 #DEFINES += WINDOWS_FLASH_DEMO=1
 
   *-g++* {
-   # mingw
+   # mingw compiler is used
    message("MingGW")
    CONFIG+= mingw
    DEFINES += MINGW=1
@@ -531,21 +551,15 @@ win32|win64 {
  *-msvc* {
   message("MSVC")
   CONFIG += msvc
-  # MSVC
+  # MSVC compiler is used
     #   disable old style cast warning C26493
     #   disable 'typedef' ignored on left of unsigned short when no variable is declared
     #  disable '%' unrecognized escape sequence
     QMAKE_CXXFLAGS += /std:c++17 /wd26493 /wd4091 /wd4129
   }
-
 }
 #-----------------------------------------------------------------------
 #windows end
-#-----------------------------------------------------------------------
-
-
-#-----------------------------------------------------------------------
-# linux end
 #-----------------------------------------------------------------------
 
 #---------------------------------------------------
@@ -752,6 +766,8 @@ win32 {
 #RC_FILE  = icon/cwp.rc
 }
 
+# these files are "other files" which allow them to be in the Git network, but not
+# in the QMAKE "must do something to these files" network
 DISTFILES += \
     ../../Docs/CrosswordBibleDatabaseFormat.doc \
     ../../Docs/PuttingBiblesOniPad.doc \
