@@ -163,13 +163,15 @@ void BookMarkHandler::doUpdate(){
 
     m_wheel1 = new StringWheelWidget(touch);
 
+    //------
+    // create the topics for the selector wheel
     pickerViewArray = gBookMarkDB->getTopicArray();
      for (int k = 0 ; k < 5; k++)
         pickerViewArray.append("");
 
-
-
     m_wheel1->setItems( pickerViewArray );
+    //-------
+
     grid->addWidget( m_wheel1, wheelRow, 0,1,20,Qt::AlignCenter );
 
     connect(m_wheel1,SIGNAL(stopped(int)),this,SLOT(stop(int)));
@@ -177,7 +179,7 @@ void BookMarkHandler::doUpdate(){
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void BookMarkHandler::topicButtonClicked(){
+void BookMarkHandler::addTopicButtonClicked(){
     DialogAddTopic *dat = new DialogAddTopic(this);
     dat->show();
 
@@ -193,6 +195,14 @@ void BookMarkHandler::deleteTopicButtonClicked(){
 
           topic = pickerViewArray[selectedRow];
         gBookMarkDB->deleteBookMarkTopicOrCategory(topic);
+        // remove the topic
+        pickerViewArray = gBookMarkDB->getTopicArray();
+         for (int k = 0 ; k < 5; k++)
+            pickerViewArray.append("");
+
+        m_wheel1->setItems( pickerViewArray );
+        selectedRow=0; //point to first item
+
       } else {
         //qDebug() << "Yes was *not* clicked";
           return;
@@ -219,7 +229,7 @@ void BookMarkHandler::makeBookMarkWheel()
     grid->addWidget(labelVerse,row++,0,1,20, Qt::AlignHCenter);
 
     QPushButton *NewTopicButton = new QPushButton(tr("  New Topic "));
-    connect(NewTopicButton, SIGNAL(clicked()), this, SLOT(topicButtonClicked()));
+    connect(NewTopicButton, SIGNAL(clicked()), this, SLOT(addTopicButtonClicked()));
     grid->addWidget(NewTopicButton,row,0,1,20, Qt::AlignRight);
 
     QPushButton *DeleteTopicButton = new QPushButton(tr("  Delete Topic "));

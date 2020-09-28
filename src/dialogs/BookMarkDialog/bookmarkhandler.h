@@ -56,7 +56,7 @@ public:
 public slots:
 
     void stop(int index);
-    void topicButtonClicked();
+    void addTopicButtonClicked();
     void pbOK_clicked();
     void onAddBookMarkClicked();
     void deleteTopicButtonClicked();
