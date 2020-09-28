@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 ;#define MyAppName "CWP"
-;#define MyAppVersion "1.0.2"
+;#define MyAppVersion "1.0.5"
 ;#define MyAppPublisher "Crossword Project"
 ;#define MyAppURL "http://www.crosswordproject.com/"
 ;#define MyAppExeName "CWP.exe"

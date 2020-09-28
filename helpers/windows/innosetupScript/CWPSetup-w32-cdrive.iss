@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "CWP"
-#define MyAppVersion "1.0.3"
+#define MyAppVersion "1.0.5"
 #define MyAppPublisher "Crossword Project"
 #define MyAppURL "http://www.crosswordproject.com/"
 #define MyAppExeName "CWP.exe"
@@ -21,7 +21,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-OutputDir=Z:\drop-folder\Dropbox\bible\CWP-QT1\CWP-installers\Windows
+OutputDir=Z:\drop-folder\Dropbox\bible\CWP-Desktop-QT\CWP-installers\Windows
 OutputBaseFilename=CWPsetup
 Compression=lzma
 SolidCompression=yes
