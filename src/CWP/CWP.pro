@@ -180,9 +180,9 @@ qwebengine {
 # have to use this format:  \'\"txt\"\' to avoid clang command line quote swallowing
 DEFINES += 'CWP_TITLE_STRING=\'\"CWP Bible Study Program\"\''
 
-DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.5\"\''
+DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.6\"\''
 #win32 {
-    VERSION = 1.0.5
+    VERSION = 1.0.6
     QMAKE_TARGET_COMPANY = Crossword Project
     QMAKE_TARGET_PRODUCT = CWP
     QMAKE_TARGET_DESCRIPTION = Bible Study Program

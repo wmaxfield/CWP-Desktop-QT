@@ -33,7 +33,20 @@
 #include "bookhandlerclass.h"
 #include "BookMarkDB.h"
 
-
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void DialogBookMarkListViewer::on_actionAlways_on_Top_triggered(bool checked)
+{
+    Qt::WindowFlags flags = this->windowFlags();
+    if (checked)
+    {
+        this->setWindowFlags(flags | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    }
+    else
+    {
+        this->setWindowFlags(flags ^ (Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint));
+    }
+}
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 DialogBookMarkListViewer::DialogBookMarkListViewer(QWidget *parent) :
@@ -49,7 +62,7 @@ DialogBookMarkListViewer::DialogBookMarkListViewer(QWidget *parent) :
     mainwindowWidth = this->width();
     mainwindowHeight = this->height();
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
-
+    on_actionAlways_on_Top_triggered(true);
 }
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------

@@ -81,7 +81,7 @@ BookMarkHandler::BookMarkHandler(QWidget *parent) :
     addBookMarkTimer=0; // zero out for later
 
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
-     //this->setModal(true);
+     //this->setModal(true);<-- not available on a mainwindow
     on_actionAlways_on_Top_triggered(true);
     isTextBook=NO;
 }

@@ -23,10 +23,13 @@ public:
 
     void resizeEvent ( QResizeEvent * event ) ;
     void        showEvent(QShowEvent *e);
+    void reloadData();
+    void on_actionAlways_on_Top_triggered(bool checked);
 
     QList<ChapterVerseStructType>myResultsArray;
     QStringList namesArray;
-    void reloadData();
+
+
     QString topic;
     QString bookmark;
 private slots:
