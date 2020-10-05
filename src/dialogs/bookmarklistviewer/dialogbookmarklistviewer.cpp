@@ -70,13 +70,13 @@ void DialogBookMarkListViewer::showEvent(QShowEvent *e) {
     Q_UNUSED(e);
 
     reloadData();
-  //  ui->lineEdit->setFocus();
-
 }
 
 // ------------------------------------------------------------------------
+// clear the widget and set the new data in it
 // ------------------------------------------------------------------------
 void DialogBookMarkListViewer::reloadData() {
+
     ui->listWidget->clear();
 
     int index;
@@ -187,7 +187,22 @@ DialogBookMarkListViewer::~DialogBookMarkListViewer()
 {
     delete ui;
 }
+// ------------------------------------------------------------------------
+// ------------------------------------------------------------------------
+ChapterVerseStructType DialogBookMarkListViewer::getCVS(QString item){
+    QStringList a;
+    ChapterVerseStructType cvs = {1,1,1,1,0};
+    a = item.split(":");
+    if (a.count()<3) {
+        return cvs;// dont' do anything if an error
+    }
+    cvs.BookNumber = a[0].toInt();
+    cvs.Chapter = a[1].toInt();
+    cvs.Verse = a[2].toInt();
+    cvs.Posn = a[3].toInt();
 
+    return cvs;
+}
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 void DialogBookMarkListViewer::on_listWidget_clicked(const QModelIndex &index)
@@ -202,7 +217,7 @@ void DialogBookMarkListViewer::on_listWidget_clicked(const QModelIndex &index)
     QString t;
 
     t = itemPtr->data(Qt::UserRole).toString();
-    a = t.split(":");
+    /*a = t.split(":");
     if (a.count()<3) {
         return;// dont' do anything if an error
     }
@@ -210,7 +225,8 @@ void DialogBookMarkListViewer::on_listWidget_clicked(const QModelIndex &index)
     cvs.Chapter = a[1].toInt();
     cvs.Verse = a[2].toInt();
     cvs.Posn = a[3].toInt();
-
+    */
+    cvs =getCVS(t);
     userHistory->pushHistoryItemWithBook(Preferences->getCurrentBook(),Preferences->getCurrentChapter(),Preferences->getCurrentVerse(),fvcp->getPageScrollPosition());
 
     Preferences->setCurrentBook(cvs.BookNumber);
@@ -223,23 +239,32 @@ void DialogBookMarkListViewer::on_listWidget_clicked(const QModelIndex &index)
     fvcp->LoadWebPage();
 
 }
-
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 void DialogBookMarkListViewer::on_pbClose_2_clicked()
 {
     close();
 }
+// ------------------------------------------------------------------------
+// delete the single item. With Qt means have to call selecteItems();
+// ------------------------------------------------------------------------
 void DialogBookMarkListViewer::deleteItem(){
-       for (int i = 0; i < ui->listWidget->selectedItems().size(); ++i) {
-           // remove curent item on selected row
-           bookmark = namesArray[i];
-           QListWidgetItem *item = ui->listWidget->takeItem(i);
-           gBookMarkDB->deleteBookMark(bookmark,topic);
-           // now delete it
-           delete item;
-       }
+    QString t;
+    QStringList a;
+    QList<QListWidgetItem *> itemList = ui->listWidget->selectedItems();
+
+    for (int i = 0; i < itemList.size(); ++i) {
+       QListWidgetItem *itemPtr = ui->listWidget->currentItem();
+        t= itemPtr->data(Qt::UserRole).toString();
+        a = t.split(":");
+        a.removeLast();
+       gBookMarkDB->deleteBookMarkWhereValueIs(a.join(":"),topic);
+       ui->listWidget->takeItem(ui->listWidget->currentRow());
+   }
+
 }
+// ------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 void DialogBookMarkListViewer::showContextMenu(const QPoint &pos)
 {
     // Handle global position

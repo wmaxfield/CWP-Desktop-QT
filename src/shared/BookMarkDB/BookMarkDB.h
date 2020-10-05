@@ -30,27 +30,27 @@ public:
 
 
     //----
-    void     addBookmarkUnderTopic(QString Topic, /*usingBook*/ QString book, /*andChapter*/ QString chapter, /*andVerse*/ QString verse, /*isTexBook*/ BOOL isTextBook);
+    void        addBookmarkUnderTopic(QString Topic, /*usingBook*/ QString book, /*andChapter*/ QString chapter, /*andVerse*/ QString verse, /*isTexBook*/ BOOL isTextBook);
 
-    BOOL          addTopic( QString TopicName);
-
-    //----
-    BOOL          CreateTables();// create the database tables
+    BOOL         addTopic( QString TopicName);
 
     //----
-    BOOL          deleteBookMark(QString BookMark, /*underTopic*/ QString Topic);
+    BOOL         CreateTables();// create the database tables
+
+    //----
+    BOOL         deleteBookMark(QString BookMark, /*underTopic*/ QString Topic);
     BOOL         DeleteVariable( QString TopicOrCategory, /*VariableName:  */  QString VariableName);
     BOOL         deleteBookMarkTopicOrCategory( QString  TopicOrCategory );
-
+    BOOL         deleteBookMarkWhereValueIs(QString Value,QString TopicOrCategory);
     //----
-    QString    getVariableByName(QString VariableName, /*andCategoryOrTopicName*/ QString TopicOrCategory );
+    QString      getVariableByName(QString VariableName, /*andCategoryOrTopicName*/ QString TopicOrCategory );
     int          getNumBookMarksInTopicOrCategory(QString TopicOrCategory);
     int          getNumTopics();
-    QStringList      getTopicArray();
-    QStringList      getBookmarkNamesArrayForTopic(QString Topic);
+    QStringList  getTopicArray();
+    QStringList  getBookmarkNamesArrayForTopic(QString Topic);
     QList<ChapterVerseStructType> getBookmarkNamesCVSArrayForTopic(QString Topic) ;
 
-    void          initWithDBName(  QString dbName, /*andType*/ int Type);
+    void         initWithDBName(  QString dbName, /*andType*/ int Type);
 
     //----
     BOOL         saveVariable( QString TopicOrCategory, /*VariableName*/ QString VariableName, /*Value*/ QString myVar );
@@ -58,9 +58,9 @@ public:
 
 
 
-    BOOL        isOpen();         // when YES, is open
-    QString     TopicOrCategoryKey(int number) ;
-    QString     BookMarkKey(int  TopicOrCategoryNumber ,int BookMarkNumber) ;
+    BOOL         isOpen();         // when YES, is open
+    QString      TopicOrCategoryKey(int number) ;
+    QString      BookMarkKey(int  TopicOrCategoryNumber ,int BookMarkNumber) ;
 };
 
 extern BookMarkDB *gBookMarkDB;

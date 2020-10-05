@@ -41,6 +41,7 @@ private slots:
 
     void deleteItem();
 private:
+    ChapterVerseStructType getCVS(QString item);
     Ui::DialogBookMarkListViewer *ui;
     int mainwindowWidth, mainwindowHeight;
 };

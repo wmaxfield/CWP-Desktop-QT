@@ -102,8 +102,6 @@ ProjectError:
 
 }
 
-
-
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 QString BookMarkDB::BookMarkKey(int  TopicOrCategoryNumber ,int BookMarkNumber) { // Asinteger) // Asstring
@@ -112,16 +110,12 @@ QString BookMarkDB::BookMarkKey(int  TopicOrCategoryNumber ,int BookMarkNumber) 
 }
 
 
-
-
-
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 BOOL BookMarkDB::deleteBookMark( QString BookMark,/* underTopic*/ QString Topic)
 {
     return DeleteVariable(Topic, /*VariableName:*/BookMark);
 }
-
 
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
@@ -149,8 +143,24 @@ BOOL BookMarkDB::deleteBookMarkTopicOrCategory(QString TopicOrCategory) // AsStr
     return YES;
 }
 
+// ------------------------------------------------------------------------
+// given a book:chapter:verse string, delete that bookmark
+// ------------------------------------------------------------------------
+BOOL BookMarkDB::deleteBookMarkWhereValueIs(QString Value, QString TopicOrCategory)
+{
+    QString Query;
+    TopicOrCategory = dbEscapeSingleQuoteString(TopicOrCategory);
+    Value           = dbEscapeSingleQuoteString(Value);
+    // the following deletes the topic
+    Query ="delete from " BOOKMARKS_TABLE" where TOC = '"+TopicOrCategory+"' and Value='"+Value+"'";
 
+    SQLExecute(Query);
+    if (Error()) {
+        return NO;
+    }
 
+    return YES;
+}
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 BOOL BookMarkDB::DeleteVariable( QString TopicOrCategory ,QString VariableName)
