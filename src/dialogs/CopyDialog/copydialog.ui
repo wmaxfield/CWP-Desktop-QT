@@ -283,6 +283,16 @@
     <string>Add Book And Chapter</string>
    </property>
   </widget>
+  <widget class="QLineEdit" name="leTextForCopy">
+   <property name="geometry">
+    <rect>
+     <x>24</x>
+     <y>513</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

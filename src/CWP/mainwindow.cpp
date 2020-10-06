@@ -1764,11 +1764,11 @@ static CopyDialog *copyDialog;
 // ------------------------------------------------------------------------
 void MainWindow:: showCopyDialog(QString BookNumber,QString Chapter,QString Verse,QString BibleNumber,QString BibleName) {
 
-    if(!copyDialog){
-        copyDialog=new CopyDialog(this);
-    }
+   copyDialog=new CopyDialog(this);
+
 
     copyDialog->setParams(BookNumber.toInt(),Chapter.toInt(),Verse.toInt(),BibleNumber.toInt(),BibleName);
+    copyDialog->hide();
     copyDialog->show();
 }
 

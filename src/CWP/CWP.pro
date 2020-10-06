@@ -180,9 +180,9 @@ qwebengine {
 # have to use this format:  \'\"txt\"\' to avoid clang command line quote swallowing
 DEFINES += 'CWP_TITLE_STRING=\'\"CWP Bible Study Program\"\''
 
-DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.7\"\''
+DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.8\"\''
 #win32 {
-    VERSION = 1.0.7
+    VERSION = 1.0.8
     QMAKE_TARGET_COMPANY = Crossword Project
     QMAKE_TARGET_PRODUCT = CWP
     QMAKE_TARGET_DESCRIPTION = Bible Study Program
@@ -647,7 +647,8 @@ SOURCES += main.cpp\
     ../dialogs/CreateBible/createbibledialog.cpp \
     ../shared/BibleDatabaseClass/bibledatabaseclass.cpp \
     ../dialogs/CopyDialog/copydialog.cpp \
-    dialogEditVerse/dialogeditverse.cpp
+    dialogEditVerse/dialogeditverse.cpp \
+    ../SystemCommand/systemcommand.cpp
 
 HEADERS  += mainwindow.h \
     ../shared/chapterversestructclass.h \
@@ -722,7 +723,8 @@ HEADERS  += mainwindow.h \
     searchlibrary.h \
     ../dialogs/CopyDialog/copydialog.h \
     dialogEditVerse/dialogeditverse.h \
-    biblemaxvalues.h
+    biblemaxvalues.h \
+    ../SystemCommand/systemcommand.h
 
 FORMS    += mainwindow.ui \
     ../dialogs/SelectBibles/selectbiblesdialog.ui \

@@ -50,6 +50,7 @@ DialogAddTopic::~DialogAddTopic()
 
 void DialogAddTopic::showEvent(QShowEvent *e)
 {
+    Q_UNUSED(e)
     ui->lineEditTopic->setFocus();
 }
 

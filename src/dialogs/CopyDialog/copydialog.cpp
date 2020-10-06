@@ -17,15 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#include "copydialog.h"
+*/
+#include "copydialog.h"
 #include "ui_copydialog.h"
 #include "bibleinfo.h"
 #include "misclibrary.h"
 #include "structs.h"
 #include "HTMLModule.h"
 #include <QClipboard>
+#include "../SystemCommand/systemcommand.h"
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::setupDialog() {
+    ui->leTextForCopy->setVisible(false);
     dontUpdate=YES;
     PopulateStartChapterCB();
     PopulateEndChapterCB();
@@ -52,8 +57,11 @@ void CopyDialog::setupDialog() {
     ui->cbBibleBook->show();
     dontUpdate=NO;
     BuildVerses();
+    this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::PopulateBooksCB() {
     ui->cbBibleBook->clear();
     int i;
@@ -63,6 +71,8 @@ void CopyDialog::PopulateBooksCB() {
 
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::PopulateTranslationsCB() {
     ui->cbTranslation->clear();
     int numBooks=Books.count();
@@ -72,6 +82,8 @@ void CopyDialog::PopulateTranslationsCB() {
 
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 CopyDialog::CopyDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CopyDialog)
@@ -90,35 +102,8 @@ CopyDialog::CopyDialog(QWidget *parent) :
 
 }
 
-void CopyDialog::PopulateStartChapterCB(){
-    ui->cbStartChapter->clear();
-    GetBookChapterVerse(_Book,bcv);
-    for (int i=1 ; i<=bcv.NumberOfChapters; i++)
-        ui->cbStartChapter->addItem(QString::number(i));
-
-}
-void CopyDialog::PopulateStartVerseCB(){
-    ui->cbStartVerse->clear();
-    GetBookChapterVerse(_Book,bcv);
-    for (int i=1 ; i<=bcv.NumberOfVerses[_StartChapter]; i++)
-        ui->cbStartVerse->addItem(QString::number(i));
-
-}
-void CopyDialog::PopulateEndChapterCB(){
-    ui->cbEndChapter->clear();
-    GetBookChapterVerse(_Book,bcv);
-    for (int i=1 ; i<=bcv.NumberOfChapters; i++)
-        ui->cbEndChapter->addItem(QString::number(i));
-
-}
-void CopyDialog::PopulateEndVerseCB(){
-    ui->cbEndVerse->clear();
-    GetBookChapterVerse(_Book,bcv);
-    for (int i=1 ; i<=bcv.NumberOfVerses[_EndChapter]; i++)
-        ui->cbEndVerse->addItem(QString::number(i));
-
-}
-
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 CopyDialog::CopyDialog( int Book, int Chapter, int Verse,int BibleNumber,QString BibleName,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CopyDialog)
@@ -132,6 +117,45 @@ CopyDialog::CopyDialog( int Book, int Chapter, int Verse,int BibleNumber,QString
     _BibleName=BibleName;
    setupDialog();
 }
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CopyDialog::PopulateStartChapterCB(){
+    ui->cbStartChapter->clear();
+    GetBookChapterVerse(_Book,bcv);
+    for (int i=1 ; i<=bcv.NumberOfChapters; i++)
+        ui->cbStartChapter->addItem(QString::number(i));
+
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CopyDialog::PopulateStartVerseCB(){
+    ui->cbStartVerse->clear();
+    GetBookChapterVerse(_Book,bcv);
+    for (int i=1 ; i<=bcv.NumberOfVerses[_StartChapter]; i++)
+        ui->cbStartVerse->addItem(QString::number(i));
+
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CopyDialog::PopulateEndChapterCB(){
+    ui->cbEndChapter->clear();
+    GetBookChapterVerse(_Book,bcv);
+    for (int i=1 ; i<=bcv.NumberOfChapters; i++)
+        ui->cbEndChapter->addItem(QString::number(i));
+
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CopyDialog::PopulateEndVerseCB(){
+    ui->cbEndVerse->clear();
+    GetBookChapterVerse(_Book,bcv);
+    for (int i=1 ; i<=bcv.NumberOfVerses[_EndChapter]; i++)
+        ui->cbEndVerse->addItem(QString::number(i));
+
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::setParams(int Book, int Chapter, int Verse,int BibleNumber,QString BibleName) {
 
     _Book=Book;
@@ -143,10 +167,14 @@ void CopyDialog::setParams(int Book, int Chapter, int Verse,int BibleNumber,QStr
   setupDialog();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 CopyDialog::~CopyDialog()
 {
     delete ui;
 }
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::BuildVerses(){
 
     if (dontUpdate)
@@ -209,10 +237,14 @@ void CopyDialog::BuildVerses(){
                 break;// exit while loop
             }
         }
-        if (Chapter >= _EndChapter){
-            if (Verse > _EndVerse)
+        // if we moved to the next chapter, the verse collection is finished.
+        if (Chapter > _EndChapter )
+            break;
+
+        // if in the end chapter, and the vers is the end verse, finished.
+        if ( Chapter == _EndChapter &&  Verse > _EndVerse)
                 break; // finished with the verse copy into the text box
-        }
+
 
         if (Verse == 1){
             if (_AddBookChapter){
@@ -230,13 +262,32 @@ void CopyDialog::BuildVerses(){
     } while(1);
 }
 
+//-----------------------------------------------------------------------------
+// on the MAC, the past into email is a vcf card.  This is a QT bug for
+// version 5.3.
+//-----------------------------------------------------------------------------
 void CopyDialog::on_pbCopy_clicked()
 {
-    QApplication::clipboard()->setText(ui->pteVerses->document()->toPlainText());
+#ifdef Q_OS_MAC
+    QString text=ui->pteVerses->document()->toPlainText();
 
+    SystemCommandClass scc;
+
+    QString command = "echo \""+text+"\" | /usr/bin/pbcopy";
+
+    scc.run(command,true);
+
+#else
+
+    QString text=ui->pteVerses->document()->toPlainText();
+    //ui->leTextForCopy->setText(text);
+    QApplication::clipboard()->setText(text);
+#endif
 
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbTranslation_currentIndexChanged(int index)
 {
     if (dontUpdate)
@@ -248,6 +299,8 @@ void CopyDialog::on_cbTranslation_currentIndexChanged(int index)
 
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbStartChapter_currentIndexChanged(int index)
 {
     if (dontUpdate)
@@ -256,6 +309,8 @@ void CopyDialog::on_cbStartChapter_currentIndexChanged(int index)
     BuildVerses();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbStartVerse_currentIndexChanged(int index)
 {
     if (dontUpdate)
@@ -264,6 +319,8 @@ void CopyDialog::on_cbStartVerse_currentIndexChanged(int index)
     BuildVerses();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbEndChapter_currentIndexChanged(int index)
 {
     if (dontUpdate)
@@ -272,6 +329,8 @@ void CopyDialog::on_cbEndChapter_currentIndexChanged(int index)
     BuildVerses();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbEndVerse_currentIndexChanged(int index)
 {
     if (dontUpdate)
@@ -280,11 +339,15 @@ void CopyDialog::on_cbEndVerse_currentIndexChanged(int index)
     BuildVerses();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_pbClose_clicked()
 {
     hide();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbBibleBook_currentIndexChanged(int index)
 {
     if (dontUpdate)
@@ -293,12 +356,16 @@ void CopyDialog::on_cbBibleBook_currentIndexChanged(int index)
     BuildVerses();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbAddVerse_clicked()
 {
     _AddVerse=ui->cbAddVerse->isChecked();
     BuildVerses();
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void CopyDialog::on_cbAddBookChapter_clicked()
 {
     _AddBookChapter=ui->cbAddBookChapter->isChecked();
