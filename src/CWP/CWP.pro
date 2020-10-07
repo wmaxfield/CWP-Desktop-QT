@@ -25,19 +25,38 @@
 #-------------------------------------------------
 # CRASHES:
 # Win32
-#       If you use mt.exe to add manifest to CWP before debugging, then when debug process starts, gdborig.exe will crash, every time.
-#       Solution: don't add manifest to executable when building debug version.
+#       If you use mt.exe to add manifest to CWP before debugging, then when debug process
+#       starts, gdborig.exe will crash, every time.
 #
+# Solution: don't add manifest to executable when building debug version.
+#
+# BUILD ERROR!!
+#-------------------------------------------------------------------------------------
+# All Versions, if building for over 5.6 (not sure when starts, Qt 5.12 is definitively
+# broken for CLANG, and MSVC: )
+#-------------------------------------------------------------------------------------
+# qHash Error, qt 5.12 .  need to change function declaration in .h file to following
+# 1) add const void *ptr = nullptr;
+# 2) replace line with return qHash(reinterpret_cast<quintptr>(ptr), seed);
+# SEE FIXED CODE FOLLOWING:
+#Q_DECL_CONST_FUNCTION inline uint qHash(std::nullptr_t, uint seed = 0) Q_DECL_NOTHROW
+#{
+#    const void *ptr = nullptr; // work-around for MSVC's/CLANG's reinterpret_cast bug
+#
+#    return qHash(reinterpret_cast<quintptr>(ptr), seed);//<-- this line fixes errors
+#   // return qHash(reinterpret_cast<quintptr>(nullptr), seed);<-- this line causes errors
+#}
 #-------------------------------------------------
-# Build notes:
+# MISC Build notes:
 #  You will have to configure your project to get debug features at launch of CWP.
 #  When you launch CWP with -debug command line option, it enables debug menus.
 #  Build tested down to Qt 5.3.2 and up to Qt 5.14
 #
-# Windows: Need at least 1 sdk.  Microsoft Visual Studios is easiest to install.
+# Windows:
+#         Need at least 1 sdk.  Microsoft Visual Studios is easiest to install.
 #          You CAN build to local directory with source on remote server
 #          even under shadow build and still debug!  (The one thing Windows got right)
-#
+#-----
 # Mac: XCode is required to be installed. (It contains sdk).
 #      You must follow shadow build rules for directory, which means the
 #      directory shows up in your project folder and must be deleted before commits,
@@ -51,28 +70,37 @@
 #      This is safe to do because libmysqlclient is not used, just asked for by the macdeployqt
 #      but under certain versions of Qt it causes a build error
 #
-# Maximum Platform Deployment (Mac)
-#      Later Mac/Qt Builds force some gaming library links that are not available on
+#      Maximum # of Platforms Deployment (Mac)
+#      Mac/Qt Builds on OSX 10.11 or greater force some gaming library links that are not available on
 #      10.8, 10.9, 10.10, etc.,
 #      This requires you compile on an OSX verions *before* that library is required by Qt.
 #
 #      Build on VM containing at least OSX 10.10 in order to work on 10.8.5.
-#      *MUST BUILD LOCALLY, NOT ON "shared" DRIVE. CLANG FAILS on shared drives*
+#      *NOTE: MUST BUILD LOCALLY, NOT ON "shared" DRIVE. CLANG FAILS on shared drives*
 #      THAT MEANS YOU CAN'T DEBUG ON OLDER MACS USING REMOTE SHARED DRIVE
 #
-#      I have been unable to get Qt version 5.6 to debug on Macintosh, so debugging is done on
+#      I have been unable to get Qt version 5.6 to debug on OSX 10.x, so debugging is done on
 #      Qt Version 5.3.2.
+#-----
+# Linux
+#        Install QTCreator
+# Ubuntu:
+#        sudo apt-get install qtcreator
 #
-# Linux Built Note: Install QTCreator (Ubuntu: sudo apt-get install qtcreator)
+# WebKit required (qt 5.12 qwebengine not available on lubuntu)
+# To prepare for build (Ubuntu/Lubuntu), run the following install command:
+#        sudo apt-get install libqt5webkit5 libqt5webkit5-dev
+#-----
 #        See Macintosh Note on shadow build.
-#        Very little time spent on Linux builds as main devl platform is Mac
+#        Very little time spent on Linux builds as main devel platform is Mac
+#        Macintosh is POSIX certified, so unix rules usually apply.
 #
 #        LinuxDeployQt is included in helpers folder / Linux folder.
 #        LinuxDeployQt is hard coded (by creators) to only run on Ubuntu 14
 #        for now.  That may change in the future, keep a watch for that.
 #        That hard coding allows running on multiple platforms from Ubuntu 14 forward.
 #-------------------------------------------------
-# QtWebkit history:
+# QtWebkit notes:
 # tldr; could not use 3rd party library, fixed code for webkit compile for mingw (win), linux, mac
 #
 # Trying for only using webkit rather than webengine (was too much happening to migrate to webengine ),
@@ -85,11 +113,12 @@
 # So, adapted to qwebengine, BUT requires Visual Studio install to get msvc compiler for webengine
 # Note: MINGW DOES NOT INCLUDE qwebengine!!!!! (but it does include qtwebkit)
 #
-# Updated: Code changed to allow either MinGW or MVSC compile, either webengine or webkit.
-# webengine automatically selected for Qt version ABOVE 5.5, except linux
+# Final: Code changed to allow either MinGW or MVSC compile, webengine or webkit.
+#          webengine automatically selected for Qt version ABOVE 5.5, except linux
 #-------------------------------------------------
 #-------------------------------------------------
-# QT CREATOR Windows:
+# QT CREATOR
+# Windows:
 # To get qtcreator larger font size for compile output, etc. use stylesheet. (google it)
 # example startup for windows batch file or desktop launcher:
 #C:\Qt\Tools\QtCreator\bin\qtcreator.exe -stylesheet C:\Qt\Tools\QtCreator\bin\qtcreatorstyle.css.txt
@@ -100,9 +129,9 @@
 #font: 18pt "Courier New"; font-weight: bold;
 #}
 #
+#-----------------------------------------------------------
 #TESTING
 #
-#-----------------------------------------------------------
 # CWP Windows: Tested on XP, win 7, win 10.  With 1 or 2 CPU cores,
 # navigation to exact verse can fail, fixed by repeating
 # navigation calls.  After testing, can fail on
@@ -111,33 +140,22 @@
 #-------------------------------------------------
 # Linux Build Notes:
 #
-# Build on Ubuntu 14.  64 bit (for linuxdeployqt)
+# If using linuxdeployqt, then build on Ubuntu 14, 64 bit (for linuxdeployqt)
+# If not using linuxdeployqt, you can build on 32 bit.
 #
-# linuxdeployqt:
+# linuxdeployqt notes:
 #
 # https://github.com/probonopd/linuxdeployqt
 # binary found here
 # https://github.com/probonopd/linuxdeployqt/releases
-# I renamed it linuxdeployqt and copied to /bin (in system path)
-# 
-# Shadow build to home directory for release can be done, just make sure to soft link CWPfiles
-# for the final packaging
-# 
-# WebKit: (qt 5.12 qwebengine not available on lubuntu)
-# run the following install command:
-# sudo apt-get install libqt5webkit5 libqt5webkit5-dev
 #
-#-------------------------------------------------------------------------------------
-# All Builds
-#-------------------------------------------------------------------------------------
-# qHash Error, qt 5.12 .  need to change function declaration in .h file to following:
-#Q_DECL_CONST_FUNCTION inline uint qHash(std::nullptr_t, uint seed = 0) Q_DECL_NOTHROW
-#{
-#    const void *ptr = nullptr; // work-around for MSVC's/CLANG's reinterpret_cast bug
+# To use linuxdeployqt, renamed linuxdeployqt-x86_64.appimage to
+# linuxdeployqt and copied to /bin (in system path)
+# 
+# Shadow build to home directory for release can be done, just make sure to soft
+# link CWPfiles directory for the final packaging
+# 
 #
-#    return qHash(reinterpret_cast<quintptr>(ptr), seed);//<-- this line fixes errors
-#   // return qHash(reinterpret_cast<quintptr>(nullptr), seed);<-- this line causes errors
-#}
 #
 
 QT       += core gui sql
