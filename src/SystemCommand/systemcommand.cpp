@@ -21,7 +21,11 @@ bool SystemCommandClass::run(QString command,bool waitForFinish)
     return RunLinux(command, waitForFinish);
 
 #endif
-
+#ifdef Q_OS_WIN
+    Q_UNUSED(command)
+    Q_UNUSED(waitForFinish)
+  return 0;
+#endif
 }
 //------------------------------------------------------
 //------------------------------------------------------
@@ -60,7 +64,7 @@ bool SystemCommandClass::RunLinux(QString Command,bool waitForFinish){
         // -j do not try to set the date
 
         //qWarning() << " cannot start process ";
-        MessageBoxOK(tr("Permission"),tr("Cannot Perform Command"));
+        MsgBox(tr("Cannot Perform Command"));
         return false;
     }
 
@@ -71,8 +75,8 @@ bool SystemCommandClass::RunLinux(QString Command,bool waitForFinish){
         if (!proc_ovpn->waitForFinished(waitTime)){
             //qWarning() << "timeout .. ";
             strng=proc_ovpn->readAllStandardOutput();
-            MessageBoxOK(tr("Command"),tr("Command timeout!"));
-            MessageBoxOK(tr("Command"),strng);
+            MsgBox(tr("Command timeout!"));
+            MsgBox(strng);
             return false;
         }
     }

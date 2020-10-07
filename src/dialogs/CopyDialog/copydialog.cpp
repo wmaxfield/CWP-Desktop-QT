@@ -30,7 +30,9 @@
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CopyDialog::setupDialog() {
-    ui->leTextForCopy->setVisible(false);
+
+    this->setModal(true);
+
     dontUpdate=YES;
     PopulateStartChapterCB();
     PopulateEndChapterCB();
@@ -56,6 +58,12 @@ void CopyDialog::setupDialog() {
     ui->cbBibleBook->setCurrentIndex(_Book-1);
     ui->cbBibleBook->show();
     dontUpdate=NO;
+    // default to add verses and book/chapter
+    ui->cbAddVerse->setChecked(true);
+    ui->cbAddBookChapter->setChecked(true);
+    _AddVerse=true;
+    _AddBookChapter=true;
+
     BuildVerses();
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
 }
@@ -283,6 +291,7 @@ void CopyDialog::on_pbCopy_clicked()
     //ui->leTextForCopy->setText(text);
     QApplication::clipboard()->setText(text);
 #endif
+    close();
 
 }
 
@@ -296,7 +305,6 @@ void CopyDialog::on_cbTranslation_currentIndexChanged(int index)
     BuildVerses();
 
 }
-
 
 
 //-----------------------------------------------------------------------------
@@ -343,7 +351,7 @@ void CopyDialog::on_cbEndVerse_currentIndexChanged(int index)
 //-----------------------------------------------------------------------------
 void CopyDialog::on_pbClose_clicked()
 {
-    hide();
+    close();
 }
 
 //-----------------------------------------------------------------------------
