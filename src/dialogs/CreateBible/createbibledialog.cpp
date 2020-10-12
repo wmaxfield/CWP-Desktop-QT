@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#include "createbibledialog.h"
+*/
+#include "createbibledialog.h"
 #include "ui_createbibledialog.h"
 #include <QFileDialog>
 #include <QProcess>
@@ -29,6 +30,8 @@ int16_t BibleNameChars;
 int16_t BibleDirChars;
 int16_t BibleShemaChars;
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 CreateBibleDialog::CreateBibleDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CreateBibleDialog)
@@ -37,6 +40,8 @@ CreateBibleDialog::CreateBibleDialog(QWidget *parent) :
     sqliteFile="";
 }
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 void CreateBibleDialog::checkEnableCreate() {
     if (BibleNameChars && BibleDirChars) {
         ui->pbCreateBible->setEnabled(true);
@@ -45,6 +50,8 @@ void CreateBibleDialog::checkEnableCreate() {
     }
 }
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 CreateBibleDialog::~CreateBibleDialog()
 {
     delete ui;
@@ -52,6 +59,8 @@ CreateBibleDialog::~CreateBibleDialog()
 
 
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 void CreateBibleDialog::on_leBibleName_returnPressed()
 {
     // see if there are characters in the text

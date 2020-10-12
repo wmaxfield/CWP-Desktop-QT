@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#include "dialogselectbookinbible.h"
+*/
+#include "dialogselectbookinbible.h"
 #include "ui_dialogselectbookinbible.h"
 #include "mainwindow.h"
 #include "misclibrary.h"
@@ -38,6 +39,10 @@ DialogSelectBookInBible::DialogSelectBookInBible(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
+#ifdef Q_OS_LINUX
+    this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
+#endif
+
     setModal(true);
 }
 
@@ -241,6 +246,7 @@ void DialogSelectBookInBible::on_listWidget_clicked(const QModelIndex &index)
     scib->setGeometry(this->geometry());// position over top of books
     scib->book = cell.BookNumber;
     scib->bookName = itemName;
+    scib->hide();// wsm force to front by hiding then showing
     scib->show();
 
     //fvcp->LoadWebPage();// force going to that book

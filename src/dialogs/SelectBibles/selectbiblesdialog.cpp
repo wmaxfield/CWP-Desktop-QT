@@ -39,6 +39,9 @@ SelectBiblesDialog::SelectBiblesDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
+#ifdef Q_OS_LINUX
+    this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);// wsm fix linux modality problem
+#endif
 
     setModal(true);
 

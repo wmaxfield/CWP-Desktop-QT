@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#include "dialogselectchapterinbook.h"
+*/
+#include "dialogselectchapterinbook.h"
 #include "ui_dialogselectchapterinbook.h"
 #include "preferencesmodule.h"
 #include "mainwindow.h"
@@ -30,6 +31,9 @@ DialogSelectChapterInBook::DialogSelectChapterInBook(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
+#ifdef Q_OS_LINUX
+    this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);// wsm fix linux modality problem
+#endif
     setModal(true);
 }
 

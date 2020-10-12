@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  * ========================================
-*/#include "dialogcopyright.h"
+*/
+#include "dialogcopyright.h"
 #include "ui_dialogcopyright.h"
 #include "structs.h"
 #include "preferencesmodule.h"
@@ -27,6 +28,8 @@
 
 extern QList<BookHandlerClass *>Books;
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 DialogCopyright::DialogCopyright(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogCopyright)
@@ -44,9 +47,16 @@ DialogCopyright::DialogCopyright(QWidget *parent) :
     webView->setObjectName(QStringLiteral("webView"));
     webView->setGeometry(QRect(10, 10, 556, 321));
     webView->setUrl(QUrl(QStringLiteral("about:blank")));
+    //-----------------------------------------------------------
+    // clean up memory after close
+    //-----------------------------------------------------------
+
+    this->setAttribute(Qt::WA_DeleteOnClose);// delete after close
 
 }
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 DialogCopyright::~DialogCopyright()
 {
     delete ui;
@@ -113,7 +123,9 @@ void DialogCopyright::showEvent(QShowEvent *){
 
 }
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 void DialogCopyright::on_pbOK_clicked()
 {
-    hide();
+    close();
 }

@@ -1536,12 +1536,8 @@ void MainWindow::showCopyrightForBookNumber( QString BibleNumber, /* ofType:*/ Q
     Q_UNUSED(BibleNumber);
     Q_UNUSED(Type);
 
-    if (!copyrightWindow) {
-        copyrightWindow = new DialogCopyright();
-    }
+    copyrightWindow = new DialogCopyright();
 
-#if 1
-    // handle book, chapter verse
     if (copyrightWindow) {
         copyrightWindow->bookNumber = BibleNumber.toInt();
         copyrightWindow->bookType = Type.toInt();
@@ -1549,7 +1545,6 @@ void MainWindow::showCopyrightForBookNumber( QString BibleNumber, /* ofType:*/ Q
         copyrightWindow->show();
     }
 
-#endif
 }
 
 // ------------------------------------------------------------------------

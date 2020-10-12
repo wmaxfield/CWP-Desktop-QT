@@ -30,9 +30,9 @@
 #
 # Solution: don't add manifest to executable when building debug version.
 #
-# BUILD ERROR!!
+# BUILD ERRORS!!
 #-------------------------------------------------------------------------------------
-# All Versions, if building for over 5.6 (not sure when starts, Qt 5.12 is definitively
+# All Versions, if building for over 5.6 (not sure which version it starts, Qt 5.12 is definitively
 # broken for CLANG, and MSVC: )
 #-------------------------------------------------------------------------------------
 # qHash Error, qt 5.12 .  need to change function declaration in .h file to following
@@ -88,7 +88,8 @@
 #        sudo apt-get install qtcreator
 #
 # WebKit required (qt 5.12 qwebengine not available on lubuntu)
-# To prepare for build (Ubuntu/Lubuntu), run the following install command:
+# ----
+#           To prepare for build (Ubuntu/Lubuntu), run the following install command:
 #        sudo apt-get install libqt5webkit5 libqt5webkit5-dev
 #-----
 #        See Macintosh Note on shadow build.
@@ -141,7 +142,7 @@
 # Linux Build Notes:
 #
 # If using linuxdeployqt, then build on Ubuntu 14, 64 bit (for linuxdeployqt)
-# If not using linuxdeployqt, you can build on 32 bit.
+# If not using linuxdeployqt, you can build on 32 bit or 64 bit
 #
 # linuxdeployqt notes:
 #
@@ -149,8 +150,8 @@
 # binary found here
 # https://github.com/probonopd/linuxdeployqt/releases
 #
-# To use linuxdeployqt, renamed linuxdeployqt-x86_64.appimage to
-# linuxdeployqt and copied to /bin (in system path)
+# To use linuxdeployqt, I renamed linuxdeployqt-x86_64.appimage to
+# 'linuxdeployqt' and copied that file to /bin (in system path)
 # 
 # Shadow build to home directory for release can be done, just make sure to soft
 # link CWPfiles directory for the final packaging
@@ -198,9 +199,9 @@ qwebengine {
 # have to use this format:  \'\"txt\"\' to avoid clang command line quote swallowing
 DEFINES += 'CWP_TITLE_STRING=\'\"CWP Bible Study Program\"\''
 
-DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.8\"\''
+DEFINES += 'CWP_VERSION_NUMBER=\'\"1.0.9\"\''
 #win32 {
-    VERSION = 1.0.8
+    VERSION = 1.0.9
     QMAKE_TARGET_COMPANY = Crossword Project
     QMAKE_TARGET_PRODUCT = CWP
     QMAKE_TARGET_DESCRIPTION = Bible Study Program

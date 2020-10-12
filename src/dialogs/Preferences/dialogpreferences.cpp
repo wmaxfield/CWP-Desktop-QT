@@ -178,6 +178,10 @@ extern int enable_debug; // set in MainWindow.cpp
    //-----------------------------------------------------------
    ui->cbShowCopyIt->setChecked(Preferences->getShowCopyTag());
 
+#ifdef Q_OS_LINUX
+    this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);// wsm fix linux modality problem
+#endif
+
 }
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------

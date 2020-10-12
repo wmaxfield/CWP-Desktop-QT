@@ -173,6 +173,8 @@ QString CreateBookmarkTag(SEARCH_INFO_TYPE *bcv,
     if (ShowThisInfo->showCopyTag){
         int DisplayBible = BooksToUse[BookToUse].Index;
 
+        if (DisplayBible > Books.size())
+            return "";
         BookHandlerClass *bd = Books[DisplayBible];
         //BibleDatabaseClass *bbld= bd.BibleDatabase;
         QString n;

@@ -56,6 +56,10 @@ PreferencesModuleClass::PreferencesModuleClass() : SQliteDatabase()
 {
 
 
+    for (int i=0 ; i < MAX_NUM_SELECTED_BOOKS;i++){
+        SelectedBooks[i].Index=0; // prevent indexing outside of bounds for bad database
+    }
+
         loadingPrefs = YES;
         searchPrefChanged=NO;
 
