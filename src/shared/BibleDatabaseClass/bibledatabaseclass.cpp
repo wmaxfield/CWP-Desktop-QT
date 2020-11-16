@@ -646,11 +646,12 @@ QString BibleDatabaseClass::HandleABPWord(RecordSet *rs, SHOW_THIS_INFO_TYPE *st
             }
 
             s3 = myReplace(s3," ","ZZZ");// wsm hide spaces
-            //the new webkit can't stand ",", "'", or ";" in http url.
+            //the new webkit can't stand ",","!", "'", or ";" in http url.
             s4 = myReplace(s3,";","");
             s4 = myReplace(s4,",","");
             s4 = myReplace(s4,"'","");            // if there is a "," in the text, remove it, it causes
             s4 = myReplace(s4,":","");            // if there is a "," in the text, remove it, it causes
+            s4 = myReplace(s4,"!","");            // if there is a "!" in the text, remove it, it causes
             // the link to fail
             s3 = myReplace(s3,",","");
             s1 = "<a id='t"+QString::number(sti->IDNumber)+"' href=\"http://";
@@ -673,6 +674,7 @@ QString BibleDatabaseClass::HandleABPWord(RecordSet *rs, SHOW_THIS_INFO_TYPE *st
         s4 = myReplace(s4,",","");
         s4 = myReplace(s4,"'","");
         s4 = myReplace(s4,":","");            // if there is a "," in the text, remove it, it causes
+        s4 = myReplace(s4,"!","");            // if there is a "!" in the text, remove it, it causes
         s1 = "<a id='t"+QString::number(sti->IDNumber)+"' href=\"http://";
         s1 = s1+ Language +TheWord[2]  +"_t" +QString::number(sti->IDNumber) + "_"+ s4 +"\"" HTML_GENERIC_END_TAG +TheWord[2]+ HTML_HREF_ENDS UN_SPAN +endOfLine();
                          // , sti->IDNumber, Language,TheWord[2], sti->IDNumber, s3,TheWord[2],endOfLine());
@@ -699,6 +701,7 @@ QString BibleDatabaseClass::HandleABPWord(RecordSet *rs, SHOW_THIS_INFO_TYPE *st
                 s2 = myReplace(s2,";","");
                 s2 = myReplace(s2,",","");
                 s2 = myReplace(s2,":","");            // if there is a "," in the text, remove it, it causes
+                s2 = myReplace(s2,"!","");            // if there is a "!" in the text, remove it, it causes
                 if (s2.length()) {
                     s2 = str.sprintf( "<a id='d%u' href=\"http://D_%ls_d%u" QUOTE HTML_GENERIC_END_TAG "%ls" HTML_HREF_ENDS
                                       ,dictionaryIDNumber,(wchar_t*) s2.utf16(),dictionaryIDNumber,(wchar_t*)s[index].utf16());
@@ -1498,7 +1501,9 @@ void BibleDatabaseClass::InsertWordIntoDatabase(BibleBookInfoStructType *bbis , 
     //    catchthis=true;
     //w = myReplace(word,"'","''");
     preWord = myReplace(preWord,"'","''");
+   // preWord = myReplace(preWord,"\"","&quot;");
     postWord = myReplace(postWord,"'","''");
+  //  postWord = myReplace(postWord,"\"","&quot;");
 
     Query ="insert into "+bbis->TableName+"(" CHAPTER_COLUMN "," VERSE_COLUMN "," WORD_SEQ_COLUMN "," WORD_COLUMN "," ORIG_WORD_TYPE_COLUMN "," DICTIONARY_ENTRY_COLUMN "," WORD_PRE ","  WORD_POST ") values (";
     Query = Query + "'"+ QString::number(chapter)+"', '"+  QString::number(verse)+"', '";
